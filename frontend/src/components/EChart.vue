@@ -4,7 +4,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
-import * as echarts from 'echarts'
+
+// 优先使用CDN加载的全局echarts
+const echarts = (window as any).echarts || require('echarts')
 
 const props = defineProps<{
   option: any
@@ -13,7 +15,7 @@ const props = defineProps<{
 }>()
 
 const chartRef = ref<HTMLDivElement>()
-let chartInstance: echarts.ECharts | null = null
+let chartInstance: any = null
 
 onMounted(() => {
   if (chartRef.value) {

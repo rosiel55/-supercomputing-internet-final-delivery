@@ -307,94 +307,18 @@
       series: [{ type: 'pie', radius: ['50%', '70%'], center: ['50%', '45%'], avoidLabelOverlap: false, label: { show: false }, labelLine: { show: false }, data: [{ value: 42156, name: '成功', itemStyle: { color: '#4caf50' } }, { value: 166, name: '失败', itemStyle: { color: '#ffcdd2' } }] }]
     });
     
-    // 中国地图 - 使用真实geoJSON，节点尺寸调小
+    // 地图
     echarts.init(document.getElementById('mapChart')).setOption({
       backgroundColor: 'transparent',
-      tooltip: { 
-        trigger: 'item', 
-        backgroundColor: 'rgba(255,255,255,0.95)', 
-        borderColor: '#e8e8e8', 
-        textStyle: { color: '#333' }, 
-        formatter: function(p) { 
-          if(p.seriesType==='effectScatter' || p.seriesType==='scatter') 
-            return '<div style="padding:8px;"><div style="font-weight:600;">'+p.name+'</div><div>节点: <span style="color:#e53935;font-weight:600;">'+p.data.value[2]+'</span></div></div>'; 
-          return p.name; 
-        }
-      },
-      geo: {
-        map: 'china',
-        roam: true,
-        zoom: 1.2,
-        center: [105, 36],
-        label: { show: true, color: '#666', fontSize: 10 },
-        itemStyle: { areaColor: '#f5f5f5', borderColor: '#ddd', borderWidth: 1 },
-        emphasis: { itemStyle: { areaColor: '#e8e8e8' }, label: { color: '#333' } },
-        regions: [
-          { name: '北京', itemStyle: { areaColor: '#ffebee' } },
-          { name: '上海', itemStyle: { areaColor: '#ffebee' } },
-          { name: '广东', itemStyle: { areaColor: '#ffebee' } },
-          { name: '江苏', itemStyle: { areaColor: '#ffebee' } },
-          { name: '山东', itemStyle: { areaColor: '#ffebee' } },
-          { name: '湖南', itemStyle: { areaColor: '#ffebee' } },
-          { name: '四川', itemStyle: { areaColor: '#fff3e0' } },
-          { name: '陕西', itemStyle: { areaColor: '#fff3e0' } }
-        ]
-      },
+      tooltip: { trigger: 'item', backgroundColor: 'rgba(255,255,255,0.95)', borderColor: '#e8e8e8', textStyle: { color: '#333' }, formatter: function(p) { if(p.seriesType==='effectScatter') return '<div style="padding:8px;"><div style="font-weight:600;">'+p.name+'</div><div>节点: <span style="color:#e53935;font-weight:600;">'+p.data.value[2]+'</span></div></div>'; return p.name; }},
+      grid: { left: '2%', right: '2%', top: '5%', bottom: '5%' },
+      xAxis: { type: 'value', show: false, min: 73, max: 136 },
+      yAxis: { type: 'value', show: false, min: 17, max: 54 },
       series: [
-        // 主要算力中心（带涟漪效果）- 节点尺寸调小
-        { 
-          type: 'effectScatter', 
-          coordinateSystem: 'geo',
-          symbolSize: function(v){ return Math.sqrt(v[2]) * 0.8; },
-          showEffectOn: 'render', 
-          rippleEffect: { brushType: 'stroke', scale: 2.5, period: 4 },
-          itemStyle: { 
-            color: { type: 'radial', x: 0.5, y: 0.5, r: 0.5, colorStops: [{offset:0,color:'#ff8a80'},{offset:0.5,color:'#e53935'},{offset:1,color:'#c62828'}] }, 
-            shadowBlur: 15,
-            shadowColor: 'rgba(229,57,53,0.3)'
-          }, 
-          label: { 
-            show: true, 
-            position: 'top', 
-            formatter: '{b}', 
-            color: '#333', 
-            fontSize: 11,
-            fontWeight: 500, 
-            backgroundColor: 'rgba(255,255,255,0.9)', 
-            padding: [3,6],
-            borderRadius: 4 
-          }, 
-          data: [
-            {name:'北京',value:[116.4,39.9,1000]},
-            {name:'济南',value:[117.0,36.7,1000]},
-            {name:'昆山',value:[120.6,31.3,1000]},
-            {name:'上海',value:[121.5,31.2,800]},
-            {name:'长沙',value:[112.9,28.2,1000]},
-            {name:'广州',value:[113.3,23.1,1000]}
-          ]
-        },
-        // 次要算力节点 - 节点尺寸调小
-        { 
-          type: 'scatter', 
-          coordinateSystem: 'geo',
-          symbolSize: function(v){ return Math.sqrt(v[2]) * 0.6; },
-          itemStyle: { color: '#ff8a80', opacity: 0.85 }, 
-          label: { 
-            show: true, 
-            position: 'bottom', 
-            formatter: '{b}', 
-            color: '#666', 
-            fontSize: 10 
-          }, 
-          data: [
-            {name:'武汉',value:[114.1,30.6,600]},
-            {name:'成都',value:[104.1,30.7,450]},
-            {name:'西安',value:[108.9,34.3,400]},
-            {name:'重庆',value:[106.5,29.6,500]},
-            {name:'沈阳',value:[123.4,41.8,350]},
-            {name:'郑州',value:[113.6,34.8,300]}
-          ] 
-        }
+        { type: 'line', smooth: 0.3, symbol: 'none', lineStyle: { color: '#e0e0e0', width: 1, type: 'dashed' }, areaStyle: { color: 'rgba(229,57,53,0.03)' }, silent: true, data: [[85,48],[88,50],[92,52],[96,53],[100,53],[105,53],[110,51],[115,49],[120,46],[125,43],[128,41],[130,38],[128,35],[125,32],[122,29],[120,26],[118,24],[116,22],[114,20],[112,19],[110,20],[108,22],[106,24],[104,26],[102,28],[100,30],[98,32],[96,34],[94,36],[92,38],[90,40],[88,42],[86,45],[85,48]] },
+        { type: 'effectScatter', coordinateSystem: 'cartesian2d', symbolSize: function(v){ return Math.sqrt(v[2])*1.5; }, showEffectOn: 'render', rippleEffect: { brushType: 'stroke', scale: 4, period: 4 }, itemStyle: { color: { type: 'radial', x: 0.5, y: 0.5, r: 0.5, colorStops: [{offset:0,color:'#ff8a80'},{offset:0.5,color:'#e53935'},{offset:1,color:'#c62828'}] }, shadowBlur: 20, shadowColor: 'rgba(229,57,53,0.4)' }, label: { show: true, position: 'top', formatter: '{b}', color: '#333', fontSize: 12, fontWeight: 500, backgroundColor: 'rgba(255,255,255,0.8)', padding: [4,8], borderRadius: 4 }, data: [{name:'北京',value:[116.4,39.9,1000],itemStyle:{color:'#c62828'}},{name:'济南',value:[117.0,36.7,1000],itemStyle:{color:'#e53935'}},{name:'昆山',value:[120.6,31.3,1000],itemStyle:{color:'#e53935'}},{name:'上海',value:[121.5,31.2,800],itemStyle:{color:'#ef5350'}},{name:'长沙',value:[112.9,28.2,1000],itemStyle:{color:'#e53935'}},{name:'广州',value:[113.3,23.1,1000],itemStyle:{color:'#e53935'}}] },
+        { type: 'scatter', coordinateSystem: 'cartesian2d', symbolSize: function(v){ return Math.sqrt(v[2])*1.2; }, itemStyle: { color: '#ff8a80', opacity: 0.8 }, label: { show: true, position: 'bottom', formatter: '{b}', color: '#666', fontSize: 11 }, data: [{name:'武汉',value:[114.1,30.6,600]},{name:'成都',value:[104.1,30.7,450]},{name:'西安',value:[108.9,34.3,400]},{name:'重庆',value:[106.5,29.6,500]},{name:'沈阳',value:[123.4,41.8,350]},{name:'郑州',value:[113.6,34.8,300]}] },
+        { type: 'lines', coordinateSystem: 'cartesian2d', effect: { show: true, period: 6, trailLength: 0.7, color: '#e53935', symbolSize: 3 }, lineStyle: { color: '#ffcdd2', width: 1, opacity: 0.6, curveness: 0.2 }, data: [{coords:[[116.4,39.9],[117.0,36.7]]},{coords:[[116.4,39.9],[120.6,31.3]]},{coords:[[117.0,36.7],[120.6,31.3]]},{coords:[[120.6,31.3],[121.5,31.2]]},{coords:[[116.4,39.9],[112.9,28.2]]},{coords:[[112.9,28.2],[113.3,23.1]]},{coords:[[113.3,23.1],[114.1,30.6]]}] }
       ]
     });
   </script>

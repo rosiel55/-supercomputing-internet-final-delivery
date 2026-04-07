@@ -423,7 +423,7 @@ const taskCompleteOption = {
   }]
 }
 
-// 优化后的中国地图配置
+// 中国地图配置 - 使用真实geoJSON地图
 const mapOption = {
   backgroundColor: 'transparent',
   tooltip: {
@@ -433,7 +433,7 @@ const mapOption = {
     borderWidth: 1,
     textStyle: { color: '#333' },
     formatter: function(params: any) {
-      if (params.seriesType === 'effectScatter') {
+      if (params.seriesType === 'effectScatter' || params.seriesType === 'scatter') {
         return `<div style="padding:8px;">
           <div style="font-weight:600;margin-bottom:4px;">${params.name}</div>
           <div>节点数: <span style="color:#e53935;font-weight:600;">${params.data.value[2]}</span></div>
@@ -443,36 +443,52 @@ const mapOption = {
       return params.name
     }
   },
-  grid: { left: '2%', right: '2%', top: '5%', bottom: '5%' },
-  xAxis: { type: 'value', show: false, min: 73, max: 136 },
-  yAxis: { type: 'value', show: false, min: 17, max: 54 },
-  series: [
-    // 中国轮廓背景
-    {
-      type: 'line',
-      smooth: 0.3,
-      symbol: 'none',
-      lineStyle: { color: '#e0e0e0', width: 1, type: 'dashed' },
-      areaStyle: { color: 'rgba(229, 57, 53, 0.03)' },
-      silent: true,
-      data: [
-        [85,48],[88,50],[92,52],[96,53],[100,53],[105,53],[110,51],[115,49],[120,46],[125,43],
-        [128,41],[130,38],[128,35],[125,32],[122,29],[120,26],[118,24],[116,22],[114,20],[112,19],
-        [110,20],[108,22],[106,24],[104,26],[102,28],[100,30],[98,32],[96,34],[94,36],[92,38],
-        [90,40],[88,42],[86,45],[85,48]
-      ]
+  // 地理坐标系 - 真实中国地图
+  geo: {
+    map: 'china',
+    roam: true,
+    zoom: 1.2,
+    center: [105, 36],
+    label: {
+      show: true,
+      color: '#666',
+      fontSize: 10
     },
-    // 主要城市节点（带涟漪效果）
+    itemStyle: {
+      areaColor: '#f5f5f5',
+      borderColor: '#ddd',
+      borderWidth: 1
+    },
+    emphasis: {
+      itemStyle: {
+        areaColor: '#e8e8e8'
+      },
+      label: {
+        color: '#333'
+      }
+    },
+    // 中国地图各省份数据
+    regions: [
+      { name: '北京', itemStyle: { areaColor: '#ffebee' } },
+      { name: '上海', itemStyle: { areaColor: '#ffebee' } },
+      { name: '广东', itemStyle: { areaColor: '#ffebee' } },
+      { name: '江苏', itemStyle: { areaColor: '#ffebee' } },
+      { name: '山东', itemStyle: { areaColor: '#ffebee' } },
+      { name: '湖南', itemStyle: { areaColor: '#ffebee' } }
+    ]
+  },
+  series: [
+    // 主要算力中心（带涟漪效果）
     {
       type: 'effectScatter',
-      coordinateSystem: 'cartesian2d',
+      coordinateSystem: 'geo',
       symbolSize: function(val: number[]) {
-        return Math.sqrt(val[2]) * 1.5
+        return Math.sqrt(val[2]) * 2.5
       },
       showEffectOn: 'render',
       rippleEffect: {
         brushType: 'stroke',
-        scale: 4,
+        scale: 3,
         period: 4
       },
       itemStyle: {
@@ -495,34 +511,53 @@ const mapOption = {
         color: '#333',
         fontSize: 12,
         fontWeight: 500,
-        backgroundColor: 'rgba(255,255,255,0.8)',
+        backgroundColor: 'rgba(255,255,255,0.9)',
         padding: [4, 8],
-        borderRadius: 4
+        borderRadius: 4,
+        shadowBlur: 4,
+        shadowColor: 'rgba(0,0,0,0.1)'
       },
       data: [
-        { name: '北京', value: [116.4, 39.9, 1000], itemStyle: { color: '#c62828' } },
-        { name: '济南', value: [117.0, 36.7, 1000], itemStyle: { color: '#e53935' } },
-        { name: '昆山', value: [120.6, 31.3, 1000], itemStyle: { color: '#e53935' } },
-        { name: '上海', value: [121.5, 31.2, 800], itemStyle: { color: '#ef5350' } },
-        { name: '长沙', value: [112.9, 28.2, 1000], itemStyle: { color: '#e53935' } },
-        { name: '广州', value: [113.3, 23.1, 1000], itemStyle: { color: '#e53935' } },
+        { name: '北京', value: [116.4, 39.9, 1000] },
+        { name: '济南', value: [117.0, 36.7, 1000] },
+        { name: '上海', value: [121.5, 31.2, 800] },
+        { name: '长沙', value: [112.9, 28.2, 1000] },
+        { name: '广州', value: [113.3, 23.1, 1000] },
+        { name: '成都', value: [104.1, 30.7, 600] },
+        { name: '西安', value: [108.9, 34.3, 500] }
       ]
     },
-    // 次要城市节点
+    // 次要算力节点
     {
       type: 'scatter',
-      coordinateSystem: 'cartesian2d',
+      coordinateSystem: 'geo',
       symbolSize: function(val: number[]) {
-        return Math.sqrt(val[2]) * 1.2
+        return Math.sqrt(val[2]) * 2
       },
       itemStyle: {
         color: '#ff8a80',
-        opacity: 0.8
+        opacity: 0.9
       },
       label: {
         show: true,
         position: 'bottom',
         formatter: '{b}',
+        color: '#666',
+        fontSize: 10
+      },
+      data: [
+        { name: '沈阳', value: [123.4, 41.8, 300] },
+        { name: '郑州', value: [113.6, 34.8, 400] },
+        { name: '武汉', value: [114.3, 30.6, 350] },
+        { name: '杭州', value: [120.2, 30.3, 450] },
+        { name: '深圳', value: [114.1, 22.5, 500] },
+        { name: '重庆', value: [106.5, 29.6, 400] },
+        { name: '昆明', value: [102.8, 25.0, 250] },
+        { name: '兰州', value: [103.8, 36.1, 200] }
+      ]
+    }
+  ]
+}
         color: '#666',
         fontSize: 11
       },

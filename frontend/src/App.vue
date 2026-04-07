@@ -137,10 +137,11 @@ import StatsCard from './components/StatsCard.vue'
 </script>
 
 <style scoped>
+/* 红色企业风配色方案 */
 .dashboard {
   min-height: 100vh;
-  background: #0a1929;
-  color: #fff;
+  background: #f5f5f5;
+  color: #333;
 }
 
 .header {
@@ -149,20 +150,21 @@ import StatsCard from './components/StatsCard.vue'
   justify-content: space-between;
   padding: 0 24px;
   height: 64px;
-  background: linear-gradient(90deg, #0d2137 0%, #0a1929 100%);
-  border-bottom: 1px solid #1e3a5f;
+  background: linear-gradient(90deg, #c62828 0%, #e53935 50%, #f44336 100%);
+  border-bottom: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .logo h1 {
   font-size: 20px;
   font-weight: 600;
-  color: #4fc3f7;
+  color: #fff;
   margin: 0;
 }
 
 .subtitle {
   font-size: 12px;
-  color: #8b9dc3;
+  color: rgba(255,255,255,0.8);
   margin-left: 8px;
 }
 
@@ -172,30 +174,31 @@ import StatsCard from './components/StatsCard.vue'
 }
 
 .nav a {
-  color: #8b9dc3;
+  color: rgba(255,255,255,0.9);
   text-decoration: none;
   font-size: 14px;
-  padding: 8px 0;
-  border-bottom: 2px solid transparent;
+  padding: 8px 16px;
+  border-radius: 4px;
   transition: all 0.3s;
 }
 
 .nav a.active,
 .nav a:hover {
-  color: #4fc3f7;
-  border-bottom-color: #4fc3f7;
+  color: #fff;
+  background: rgba(255,255,255,0.2);
 }
 
 .main-container {
   display: flex;
-  height: calc(100vh - 64px);
+  min-height: calc(100vh - 64px);
 }
 
 .sidebar {
   width: 200px;
-  background: #0d2137;
+  background: #fff;
   padding: 16px 0;
-  border-right: 1px solid #1e3a5f;
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 4px rgba(0,0,0,0.05);
 }
 
 .menu-item {
@@ -205,14 +208,14 @@ import StatsCard from './components/StatsCard.vue'
   padding: 12px 24px;
   cursor: pointer;
   transition: all 0.3s;
-  color: #8b9dc3;
+  color: #666;
 }
 
 .menu-item:hover,
 .menu-item.active {
-  background: rgba(79, 195, 247, 0.1);
-  color: #4fc3f7;
-  border-right: 3px solid #4fc3f7;
+  background: rgba(229, 57, 53, 0.1);
+  color: #e53935;
+  border-right: 3px solid #e53935;
 }
 
 .icon {
@@ -223,6 +226,7 @@ import StatsCard from './components/StatsCard.vue'
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+  background: #f5f5f5;
 }
 
 .stats-grid {
@@ -240,16 +244,19 @@ import StatsCard from './components/StatsCard.vue'
 }
 
 .chart-card {
-  background: #0d2137;
+  background: #fff;
   border-radius: 8px;
   padding: 20px;
-  border: 1px solid #1e3a5f;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .chart-card h3 {
   margin: 0 0 16px 0;
   font-size: 16px;
-  color: #4fc3f7;
+  color: #333;
+  border-left: 4px solid #e53935;
+  padding-left: 12px;
 }
 
 .chart-placeholder {
@@ -257,22 +264,26 @@ import StatsCard from './components/StatsCard.vue'
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(79, 195, 247, 0.05);
+  background: #fafafa;
   border-radius: 4px;
-  color: #8b9dc3;
+  color: #999;
+  border: 1px dashed #ddd;
 }
 
 .task-section {
-  background: #0d2137;
+  background: #fff;
   border-radius: 8px;
   padding: 20px;
-  border: 1px solid #1e3a5f;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .task-section h3 {
   margin: 0 0 16px 0;
   font-size: 16px;
-  color: #4fc3f7;
+  color: #333;
+  border-left: 4px solid #e53935;
+  padding-left: 12px;
 }
 
 .task-table {
@@ -284,16 +295,17 @@ import StatsCard from './components/StatsCard.vue'
 .task-table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #1e3a5f;
+  border-bottom: 1px solid #eee;
 }
 
 .task-table th {
-  color: #8b9dc3;
+  color: #666;
   font-weight: 500;
+  background: #fafafa;
 }
 
 .task-table td {
-  color: #fff;
+  color: #333;
 }
 
 .status {
@@ -303,17 +315,17 @@ import StatsCard from './components/StatsCard.vue'
 }
 
 .status.running {
-  background: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
+  background: rgba(229, 57, 53, 0.1);
+  color: #e53935;
 }
 
 .status.pending {
-  background: rgba(255, 152, 0, 0.2);
+  background: rgba(255, 152, 0, 0.1);
   color: #ff9800;
 }
 
 .status.completed {
-  background: rgba(33, 150, 243, 0.2);
-  color: #2196f3;
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
 }
 </style>

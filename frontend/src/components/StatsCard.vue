@@ -24,16 +24,18 @@ defineProps<{
 
 <style scoped>
 .stats-card {
-  background: #0d2137;
+  background: #fff;
   border-radius: 8px;
   padding: 20px;
-  border: 1px solid #1e3a5f;
+  border: 1px solid #e0e0e0;
+  border-top: 3px solid #e53935;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   transition: all 0.3s;
 }
 
 .stats-card:hover {
-  border-color: #4fc3f7;
-  box-shadow: 0 0 20px rgba(79, 195, 247, 0.1);
+  border-color: #e53935;
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.15);
 }
 
 .card-header {
@@ -49,13 +51,13 @@ defineProps<{
 
 .card-title {
   font-size: 14px;
-  color: #8b9dc3;
+  color: #666;
 }
 
 .card-value {
   font-size: 28px;
   font-weight: 600;
-  color: #fff;
+  color: #333;
   margin-bottom: 8px;
 }
 
@@ -71,11 +73,11 @@ defineProps<{
 }
 
 .card-trend.negative {
-  color: #f44336;
+  color: #e53935;
 }
 
 .trend-label {
-  color: #8b9dc3;
+  color: #999;
   font-size: 12px;
 }
 </style>

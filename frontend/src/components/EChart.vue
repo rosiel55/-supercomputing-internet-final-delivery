@@ -4,9 +4,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from 'vue'
-
-// 优先使用CDN加载的全局echarts
-const echarts = (window as any).echarts || require('echarts')
+import * as echarts from 'echarts'
 
 const props = defineProps<{
   option: any
